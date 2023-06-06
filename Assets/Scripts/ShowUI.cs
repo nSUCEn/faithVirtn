@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ShowUI : MonoBehaviour
 {
+    [SerializeField]
+    [Range(0f, 30f)] private float secondsToWait;
     public GameObject uiObject;
     private void Start()
     {
@@ -20,7 +22,7 @@ public class ShowUI : MonoBehaviour
     }
     IEnumerator WaitForSec()
     {
-        yield return new WaitForSeconds(25);
+        yield return new WaitForSeconds(secondsToWait);
         Destroy(uiObject);
         Destroy(gameObject);
     }

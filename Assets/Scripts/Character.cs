@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-
+using UnityEngine.UIElements;
 
 public class Character : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class Character : MonoBehaviour
     public float runSpeed = 10f;
     public float jumpHeight = 2f;
     public float crouchHeight = 1f;
+    public float rotateSpeed = 10f;
 
     // Variables to check if the character is grounded and crouching
     private bool isGrounded;
@@ -50,12 +51,13 @@ public class Character : MonoBehaviour
             transform.localScale = new Vector3(1f, 1f, 1f);
         }
 
-        // Jump input
+        /*// Jump input
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(Vector3.up * Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
             animator.SetBool("IsJumping", true);
         }
+        */
 
         // Movement input
         float horizontal = Input.GetAxis("Horizontal");
@@ -79,7 +81,8 @@ public class Character : MonoBehaviour
 
         movement = Quaternion.Euler(0f, transform.eulerAngles.y, 0f) * movement;
         rb.MovePosition(rb.position + movement * Time.deltaTime);
-        childToRotate.rotation = Quaternion.LookRotation(rotate);
+    
+        childToRotate.forward = Vector3.Slerp(childToRotate.forward, rotate, Time.deltaTime * rotateSpeed);
     }
 
 }
