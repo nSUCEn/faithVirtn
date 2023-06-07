@@ -4,7 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Character : MonoBehaviour
+public class Triangle : MonoBehaviour
 {
     // Variables to adjust movement speed and jump height
     public float walkSpeed = 5f;
@@ -62,7 +62,7 @@ public class Character : MonoBehaviour
         // Movement input
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        Vector3 movement = new Vector3(horizontal, 0f, vertical);
+        Vector3 movement = new Vector3(vertical, 0f, -horizontal);
         Vector3 rotate = new Vector3(vertical, 0f, -horizontal);
         animator.SetBool("IsMoving", movement != Vector3.zero);
 
@@ -81,7 +81,7 @@ public class Character : MonoBehaviour
 
         movement = Quaternion.Euler(0f, transform.eulerAngles.y, 0f) * movement;
         rb.MovePosition(rb.position + movement * Time.deltaTime);
-    
+       
         childToRotate.forward = Vector3.Slerp(childToRotate.forward, rotate, Time.deltaTime * rotateSpeed);
     }
 
